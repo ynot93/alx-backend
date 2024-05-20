@@ -51,7 +51,7 @@ class Server:
             return []
 
         return dataset[first:last]
-    
+
     def get_hyper(self, page: int = 1, page_size: int = 10) -> dict:
         """
         Returns dataset with hypermedia metadata.
