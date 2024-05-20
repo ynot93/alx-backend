@@ -42,8 +42,8 @@ class Server:
 
         first, last = index_range(page, page_size)
         dataset = self.dataset()
-        
+
         if first >= len(dataset):
             return []
 
-        return dataset[first, last]
+        return dataset[first:last]
