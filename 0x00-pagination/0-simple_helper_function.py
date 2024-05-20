@@ -4,6 +4,7 @@ This module deals with pagination of datasets
 
 """
 
+
 def index_range(page, page_size):
     """
     Returns a tuple containing range of pagination params.
