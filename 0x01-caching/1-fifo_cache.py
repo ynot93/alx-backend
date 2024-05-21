@@ -17,7 +17,7 @@ class FIFOCache(BaseCaching):
 
         """
         super().__init__()
-    
+
     def put(self, key: str, item: str) -> None:
         """
         Assigns data to the cache
@@ -31,7 +31,7 @@ class FIFOCache(BaseCaching):
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
             first_key = next(iter(self.cache_data))
             del self.cache_data[first_key]
-            print(f"DISCARD {first_key}")
+            print(f"DISCARD: {first_key}")
 
     def get(self, key: str) -> str:
         """
