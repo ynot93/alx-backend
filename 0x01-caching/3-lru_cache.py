@@ -19,7 +19,7 @@ class LRUCache(BaseCaching):
         """
         super().__init__()
         self.cache_data = OrderedDict()
-    
+
     def put(self, key: str, item: str) -> None:
         """
         Assigns data to the cache
@@ -27,7 +27,7 @@ class LRUCache(BaseCaching):
         """
         if key is None or item is None:
             return
-        
+
         if key in self.cache_data:
             self.cache_data.move_to_end(key)
 
@@ -45,7 +45,7 @@ class LRUCache(BaseCaching):
         """
         if key is None:
             return None
-        
+
         if key in self.cache_data:
             self.cache_data.move_to_end(key)
             return self.cache_data[key]
