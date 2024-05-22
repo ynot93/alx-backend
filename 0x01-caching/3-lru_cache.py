@@ -3,8 +3,8 @@
 This module expounds on Caching concepts
 
 """
-BaseCaching = __import__('base_caching').BaseCaching
 from collections import OrderedDict
+BaseCaching = __import__('base_caching').BaseCaching
 
 
 class LRUCache(BaseCaching):
@@ -29,14 +29,12 @@ class LRUCache(BaseCaching):
             return
 
         if key in self.cache_data:
-            self.cache_data.move_to_end(key)
+            self.cache_data.pop(key)
+        elif len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+            oldest_key, _ = self.cache_data.popitem(last=False)
+            print(f"DISCARD: {oldest_key}")
 
         self.cache_data[key] = item
-
-        if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            lru_key = next(iter(self.cache_data))
-            del self.cache_data[lru_key]
-            print(f"DISCARD {lru_key}")
 
     def get(self, key: str) -> str:
         """
