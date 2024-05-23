@@ -62,8 +62,12 @@ class LFUCache(BaseCaching):
             return
 
         min_freq = min(self.usage_frequency.values())
-        candidates = [k for k, freq in self.usage_frequency.items() if freq == min_freq]
-        
+        candidates = []
+
+        for k, freq in self.usage_frequency.items():
+            if freq == min_freq:
+                candidates.append(k)
+
         if candidates:
             lru_key = None
             for key in self.access_order:
