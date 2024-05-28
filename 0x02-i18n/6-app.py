@@ -35,15 +35,16 @@ def get_locale():
     Determine language from the accepted ones
 
     """
+    # Check if 'locale' is in the request rags
+    locale = request.args.get('locale')
+    if locale in app.config['LANGUAGES']:
+        return locale
+
     # Check if a user is logged in and has a locale set
     user = getattr(g, 'user', None)
     if user and user['locale'] in app.config['LANGUAGES']:
         return user['locale']
 
-    # Check if 'locale' is in the request rags
-    locale = request.args.get('locale')
-    if locale in app.config['LANGUAGES']:
-        return locale
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
@@ -66,7 +67,7 @@ def index():
     Entry point into the flask app
 
     """
-    return render_template('5-index.html')
+    return render_template('6-index.html')
 
 
 if __name__ == "__main__":
