@@ -54,6 +54,7 @@ def get_user():
         return users.get(int(user_id))
     return None
 
+
 # Define the before_request function
 @app.before_request
 def before_request():

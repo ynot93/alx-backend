@@ -76,6 +76,7 @@ def get_user():
         return users.get(int(user_id))
     return None
 
+
 # Define the before_request function
 @app.before_request
 def before_request():
@@ -88,7 +89,9 @@ def index():
     Entry point into the flask app
 
     """
-    current_time = datetime.now(pytz.timezone(get_timezone())).strftime('%b %d, %Y, %I:%M:%S %p')
+    current_time = datetime.now(
+        pytz.timezone(
+            get_timezone())).strftime('%b %d, %Y, %I:%M:%S %p')
 
     return render_template('index.html', current_time=current_time)
 
