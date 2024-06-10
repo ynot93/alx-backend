@@ -30,6 +30,9 @@ babel = Babel(app)
 
 
 def get_user():
+    """
+    Returns the user from the given id
+    """
     user_id = request.args.get('login_as')
     if user_id:
         return users.get(int(user_id))
@@ -47,13 +50,14 @@ def get_locale():
     Determine language from the accepted ones
 
     """
+    locale = request.args.get('locale')
+    if locale in app.config['LANGUAGES']:
+        return locale
+
     user = getattr(g, 'user', None)
     if user and user['locale'] in app.config['LANGUAGES']:
         return user['locale']
 
-    locale = request.args.get('locale')
-    if locale in app.config['LANGUAGES']:
-        return locale
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
