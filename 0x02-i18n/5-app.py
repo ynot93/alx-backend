@@ -32,6 +32,7 @@ babel = Babel(app)
 def get_user():
     """
     Returns the user from the given id
+
     """
     user_id = request.args.get('login_as')
     if user_id:
@@ -41,6 +42,10 @@ def get_user():
 
 @app.before_request
 def before_request():
+    """
+    To be executed before each request is made
+
+    """
     g.user = get_user()
 
 

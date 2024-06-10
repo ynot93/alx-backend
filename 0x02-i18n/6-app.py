@@ -4,7 +4,7 @@ This module provides support for internationalization(i18n)
 
 """
 from flask import Flask, render_template, request, g
-from flask_babel import Babel, gettext as _
+from flask_babel import Babel
 
 app = Flask(__name__)
 users = {
@@ -29,37 +29,41 @@ app.config.from_object(Config)
 babel = Babel(app)
 
 
-@babel.localeselector
-def get_locale():
-    """
-    Determine language from the accepted ones
-
-    """
-    # Check if 'locale' is in the request rags
-    locale = request.args.get('locale')
-    if locale in app.config['LANGUAGES']:
-        return locale
-
-    # Check if a user is logged in and has a locale set
-    user = getattr(g, 'user', None)
-    if user and user['locale'] in app.config['LANGUAGES']:
-        return user['locale']
-
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
-
-
-# Define the get_user function
 def get_user():
+    """
+    Returns the user from the given id
+
+    """
     user_id = request.args.get('login_as')
     if user_id:
         return users.get(int(user_id))
     return None
 
 
-# Define the before_request function
 @app.before_request
 def before_request():
+    """
+    To be executed before each request is made
+
+    """
     g.user = get_user()
+
+
+@babel.localeselector
+def get_locale():
+    """
+    Determine language from the accepted ones
+
+    """
+    locale = request.args.get('locale')
+    if locale in app.config['LANGUAGES']:
+        return locale
+
+    user = getattr(g, 'user', None)
+    if user and user['locale'] in app.config['LANGUAGES']:
+        return user['locale']
+
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 @app.route("/")
