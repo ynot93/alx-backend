@@ -4,7 +4,7 @@ This module provides support for internationalization(i18n)
 
 """
 from flask import Flask, render_template, request
-from flask_babel import Babel, gettext as _
+from flask_babel import Babel
 
 app = Flask(__name__)
 
@@ -29,7 +29,6 @@ def get_locale():
     Determine language from the accepted ones
 
     """
-    # Check if 'locale' is in the request rags
     locale = request.args.get('locale')
     if locale in app.config['LANGUAGES']:
         return locale
