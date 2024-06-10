@@ -4,7 +4,7 @@ This module provides support for internationalization(i18n)
 
 """
 from flask import Flask, render_template, request, g
-from flask_babel import Babel, gettext as _
+from flask_babel import Babel
 
 app = Flask(__name__)
 users = {
