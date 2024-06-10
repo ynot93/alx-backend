@@ -29,25 +29,6 @@ app.config.from_object(Config)
 babel = Babel(app)
 
 
-@babel.localeselector
-def get_locale():
-    """
-    Determine language from the accepted ones
-
-    """
-    # Check if a user is logged in and has a locale set
-    user = getattr(g, 'user', None)
-    if user and user['locale'] in app.config['LANGUAGES']:
-        return user['locale']
-
-    # Check if 'locale' is in the request rags
-    locale = request.args.get('locale')
-    if locale in app.config['LANGUAGES']:
-        return locale
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
-
-
-# Define the get_user function
 def get_user():
     user_id = request.args.get('login_as')
     if user_id:
@@ -55,10 +36,25 @@ def get_user():
     return None
 
 
-# Define the before_request function
 @app.before_request
 def before_request():
     g.user = get_user()
+
+
+@babel.localeselector
+def get_locale():
+    """
+    Determine language from the accepted ones
+
+    """
+    user = getattr(g, 'user', None)
+    if user and user['locale'] in app.config['LANGUAGES']:
+        return user['locale']
+
+    locale = request.args.get('locale')
+    if locale in app.config['LANGUAGES']:
+        return locale
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
 @app.route("/")
